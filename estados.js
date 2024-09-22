@@ -11,7 +11,7 @@ const estados = {
 };
 
 const transicoes = {
-    "parado": { "A": estados.q2, "B": estados.q1, "E": estados.q3 },
+    "parado": { "A": estados.q2, "B": estados.q1, "R": estados.q6, "E": estados.q3 },
     "bloqueando": { "A": estados.q2, "B": estados.q1, "R": estados.q6, "E": estados.q3 },
     "atacando": { "A": estados.q2, "B": estados.q1, "R": estados.q6 },
     "ataque especial": {},
@@ -37,8 +37,7 @@ const transicoes = {
 
 const transicao = (jogador1, jogador2, comandoJogador1, comandoJogador2) => {
     jogador1.estadoAtual = transicoes[jogador1.estadoAtual][comandoJogador1];
-    
-    console.log(jogador1.estadoAtual);
+    console.log(jogador1.nome + ": " + jogador1.estadoAtual);
 
     if (jogador1.estadoAtual == 'atacando') {
         jogador1.stamina -= 15;        
@@ -54,12 +53,11 @@ const transicao = (jogador1, jogador2, comandoJogador1, comandoJogador2) => {
     }
 
     if (jogador1.estadoAtual == 'ataque especial') {
-        jogador2.vida -= comandoJogador2 == 'B' ? 20 : 30;
+        jogador2.vida -= comandoJogador2 == 'B' ? 20 : 40;
         jogador1.stamina = 0;
     }
 
     if (jogador1.stamina == 0) jogador1.estadoAtual = 'sem stamina';
-    if (jogador2.vida <= 0) jogador2.estadoAtual = 'derrotado';
 }
 
 const automato = { Q: estados, alfabeto: ['R', 'B', 'E', 'A'], transicao, q0: estados.q0, F: [estados.q4]};
