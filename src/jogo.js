@@ -133,8 +133,11 @@ class Jogo {
                 if (comandoDefensor != CONFIG.BLOQUEAR_COMANDO) {
                     defensor.aplicarDano(CONFIG.DANO_ATACAR);
                     defensor.estadoAtual = estados.ATINGIDO;
+                    atacante.estadoAtual = estados.ATACANDO;
                     console.log(`${atacante.nome} atacou ${defensor.nome}, causando ${CONFIG.DANO_ATACAR} de dano!`);
                 } else {
+                    defensor.estadoAtual = estados.BLOQUEANDO;
+                    atacante.estadoAtual = estados.ATACANDO;
                     console.log(`${defensor.nome} bloqueou o ataque de ${atacante.nome}!`);
                 }
                 break;
@@ -144,6 +147,7 @@ class Jogo {
                 const danoEspecial = (comandoDefensor == CONFIG.BLOQUEAR_COMANDO) ? CONFIG.DANO_ESPECIAL_BLOQUEADO : CONFIG.DANO_ESPECIAL_NAO_BLOQUEADO;
                 defensor.aplicarDano(danoEspecial);
                 defensor.estadoAtual = estados.ATINGIDO;
+                atacante.estadoAtual = estados.ATAQUE_ESPECIAL;
                 console.log(`${atacante.nome} realizou um ataque especial em ${defensor.nome}, causando ${danoEspecial} de dano!`);
                 break;
 
